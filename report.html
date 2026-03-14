@@ -1,0 +1,62 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water Quality Report</title>
+<link rel="stylesheet" href="style.css">
+
+<script>
+
+function generateReport(){
+
+let ph = localStorage.getItem("ph");
+let turbidity = localStorage.getItem("turbidity");
+let tds = localStorage.getItem("tds");
+let oxygen = localStorage.getItem("oxygen");
+let temp = localStorage.getItem("temp");
+
+let result = "";
+
+result += "<h3>Water Quality Report</h3>";
+
+result += "pH Level : " + ph + "<br>";
+result += "Turbidity : " + turbidity + " NTU<br>";
+result += "TDS : " + tds + " mg/L<br>";
+result += "Dissolved Oxygen : " + oxygen + " mg/L<br>";
+result += "Temperature : " + temp + " °C<br><br>";
+
+if(ph >= 6.5 && ph <= 8.5 && turbidity <= 5 && tds <= 500)
+result += "<b>Status : Water is Safe for Drinking</b>";
+else
+result += "<b>Status : Water Quality Needs Treatment</b>";
+
+document.getElementById("report").innerHTML=result;
+
+}
+
+</script>
+
+</head>
+
+<body onload="generateReport()">
+
+<header>
+<h1>Water Quality Report</h1>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="analysis.html">Analysis</a>
+<a href="report.html">Report</a>
+</nav>
+
+<section class="report-container">
+
+<div id="report"></div>
+
+</section>
+
+</body>
+</html>
+```
