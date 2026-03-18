@@ -2,60 +2,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Water Quality Report</title>
+<title>Report</title>
 <link rel="stylesheet" href="style.css">
 
 <script>
 
-function generateReport(){
+function loadReport(){
 
-let ph = localStorage.getItem("ph");
-let turbidity = localStorage.getItem("turbidity");
-let tds = localStorage.getItem("tds");
-let oxygen = localStorage.getItem("oxygen");
-let temp = localStorage.getItem("temp");
+let wqi = localStorage.getItem("wqi");
 
-let result = "";
+let status="";
+let cls="";
 
-result += "<h3>Water Quality Report</h3>";
+if(wqi>=80){status="Excellent"; cls="good";}
+else if(wqi>=50){status="Moderate"; cls="medium";}
+else{status="Poor"; cls="bad";}
 
-result += "pH Level : " + ph + "<br>";
-result += "Turbidity : " + turbidity + " NTU<br>";
-result += "TDS : " + tds + " mg/L<br>";
-result += "Dissolved Oxygen : " + oxygen + " mg/L<br>";
-result += "Temperature : " + temp + " °C<br><br>";
-
-if(ph >= 6.5 && ph <= 8.5 && turbidity <= 5 && tds <= 500)
-result += "<b>Status : Water is Safe for Drinking</b>";
-else
-result += "<b>Status : Water Quality Needs Treatment</b>";
-
-document.getElementById("report").innerHTML=result;
-
+document.getElementById("result").innerHTML=
+"WQI Score: "+wqi+"<br>Status: <span class='"+cls+"'>"+status+"</span>";
 }
 
 </script>
 
 </head>
 
-<body onload="generateReport()">
-
-<header>
-<h1>Water Quality Report</h1>
-</header>
+<body onload="loadReport()">
 
 <nav>
 <a href="index.html">Home</a>
-<a href="about.html">About</a>
 <a href="analysis.html">Analysis</a>
 <a href="report.html">Report</a>
+<a href="about.html">About</a>
 </nav>
 
-<section class="report-container">
+<div class="report-box">
 
-<div id="report"></div>
+<h2>Water Quality Report</h2>
 
-</section>
+<p id="result"></p>
+
+<p>
+80–100: Excellent | 50–79: Moderate | Below 50: Poor
+</p>
+
+</div>
 
 </body>
 </html>
