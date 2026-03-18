@@ -2,50 +2,180 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Report</title>
-<link rel="stylesheet" href="style.css">
+<title>Water Quality Report</title>
+
+<style>
+
+/* BACKGROUND */
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #000000, #1a1a1a);
+margin: 0;
+color: #ffffff;
+}
+
+/* HEADER */
+header{
+text-align: center;
+padding: 20px;
+font-size: 28px;
+font-weight: bold;
+letter-spacing: 1px;
+}
+
+/* NAVBAR */
+nav{
+text-align: center;
+background: rgba(255,255,255,0.05);
+padding: 12px;
+backdrop-filter: blur(8px);
+}
+
+nav a{
+color: #ffffff;
+margin: 0 15px;
+text-decoration: none;
+font-size: 17px;
+transition: 0.3s;
+}
+
+nav a:hover{
+color: #00e5ff;
+}
+
+/* REPORT SECTION */
+.report-container{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 80vh;
+}
+
+/* CARD */
+.report-card{
+background: rgba(255,255,255,0.08);
+padding: 30px;
+border-radius: 18px;
+width: 360px;
+backdrop-filter: blur(15px);
+box-shadow: 0 0 25px rgba(0,0,0,0.8);
+transition: 0.3s;
+}
+
+.report-card:hover{
+transform: scale(1.03);
+}
+
+/* TEXT */
+.report-card h3{
+text-align: center;
+margin-bottom: 20px;
+color: #00e5ff;
+}
+
+.report-card p{
+margin: 10px 0;
+font-size: 16px;
+}
+
+/* STATUS */
+.safe{
+color: #00ffae;
+font-weight: bold;
+}
+
+.bad{
+color: #ff4d6d;
+font-weight: bold;
+}
+
+/* DIVIDER */
+hr{
+border: none;
+height: 1px;
+background: rgba(255,255,255,0.2);
+margin: 15px 0;
+}
+
+</style>
 
 <script>
 
-function loadReport(){
+function generateReport(){
 
-let wqi = localStorage.getItem("wqi");
+let ph = localStorage.getItem("ph");
+let turbidity = localStorage.getItem("turbidity");
+let tds = localStorage.getItem("tds");
+let oxygen = localStorage.getItem("oxygen");
+let temp = localStorage.getItem("temp");
 
-let status="";
-let cls="";
+/* CHECK */
+if(ph == null){
+document.getElementById("report").innerHTML =
+"<p style='text-align:center;'>Please analyze water first.</p>";
+return;
+}
 
-if(wqi>=80){status="Excellent"; cls="good";}
-else if(wqi>=50){status="Moderate"; cls="medium";}
-else{status="Poor"; cls="bad";}
+/* CONVERT */
+ph = parseFloat(ph);
+turbidity = parseFloat(turbidity);
+tds = parseFloat(tds);
+oxygen = parseFloat(oxygen);
+temp = parseFloat(temp);
 
-document.getElementById("result").innerHTML=
-"WQI Score: "+wqi+"<br>Status: <span class='"+cls+"'>"+status+"</span>";
+/* STATUS */
+let status = "";
+let cls = "";
+
+if(ph >= 6.5 && ph <= 8.5 && turbidity <= 5 && tds <= 500){
+status = "Water is Safe for Drinking";
+cls = "safe";
+}else{
+status = "Water Quality Needs Treatment";
+cls = "bad";
+}
+
+/* OUTPUT */
+let result = `
+<div class="report-card">
+<h3>💧 Water Quality Report</h3>
+
+<p><b>pH Level:</b> ${ph}</p>
+<p><b>Turbidity:</b> ${turbidity} NTU</p>
+<p><b>TDS:</b> ${tds} mg/L</p>
+<p><b>Dissolved Oxygen:</b> ${oxygen} mg/L</p>
+<p><b>Temperature:</b> ${temp} °C</p>
+
+<hr>
+
+<p class="${cls}">Status: ${status}</p>
+</div>
+`;
+
+document.getElementById("report").innerHTML = result;
+
 }
 
 </script>
 
 </head>
 
-<body onload="loadReport()">
+<body onload="generateReport()">
+
+<header>
+💧 Water Quality Report
+</header>
 
 <nav>
 <a href="index.html">Home</a>
+<a href="about.html">About</a>
 <a href="analysis.html">Analysis</a>
 <a href="report.html">Report</a>
-<a href="about.html">About</a>
 </nav>
 
-<div class="report-box">
-
-<h2>Water Quality Report</h2>
-
-<p id="result"></p>
-
-<p>
-80–100: Excellent | 50–79: Moderate | Below 50: Poor
-</p>
-
-</div>
+<section class="report-container">
+<div id="report"></div>
+</section>
 
 </body>
 </html>

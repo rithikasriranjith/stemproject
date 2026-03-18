@@ -2,33 +2,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Analysis</title>
+<title>Water Quality Analysis</title>
 <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+
+<script>
+
+function analyzeWater() {
+
+let ph = document.getElementById("ph").value;
+let turbidity = document.getElementById("turbidity").value;
+let tds = document.getElementById("tds").value;
+let oxygen = document.getElementById("oxygen").value;
+let temp = document.getElementById("temp").value;
+
+localStorage.setItem("ph", ph);
+localStorage.setItem("turbidity", turbidity);
+localStorage.setItem("tds", tds);
+localStorage.setItem("oxygen", oxygen);
+localStorage.setItem("temp", temp);
+
+window.location.href="report.html";
+
+}
+
+</script>
+
 </head>
 
 <body>
 
+<header>
+<h1>Water Quality Analysis</h1>
+<p>Advanced Water Parameter Monitoring</p>
+</header>
+
 <nav>
 <a href="index.html">Home</a>
+<a href="about.html">About</a>
 <a href="analysis.html">Analysis</a>
 <a href="report.html">Report</a>
-<a href="about.html">About</a>
 </nav>
 
-<section class="form-container card">
+<section class="analysis-container">
 
-<h2>Enter Water Parameters</h2>
+<h2>Enter Water Quality Parameters</h2>
 
-<form onsubmit="event.preventDefault(); calculateWQI();">
+<form onsubmit="event.preventDefault(); analyzeWater();">
 
-<input type="number" id="ph" placeholder="pH Level" required>
-<input type="number" id="tds" placeholder="TDS (mg/L)" required>
-<input type="number" id="turbidity" placeholder="Turbidity (NTU)" required>
-<input type="number" id="oxygen" placeholder="Dissolved Oxygen" required>
-<input type="number" id="temp" placeholder="Temperature (°C)" required>
+<label>pH Level</label>
+<input type="number" id="ph" step="0.1" required>
 
-<button type="submit">Analyze</button>
+<label>Turbidity (NTU)</label>
+<input type="number" id="turbidity" required>
+
+<label>Total Dissolved Solids (TDS mg/L)</label>
+<input type="number" id="tds" required>
+
+<label>Dissolved Oxygen (mg/L)</label>
+<input type="number" id="oxygen" required>
+
+<label>Water Temperature (°C)</label>
+<input type="number" id="temp" required>
+
+<button type="submit">Analyze Water</button>
 
 </form>
 
